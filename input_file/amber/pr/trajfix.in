@@ -1,0 +1,24 @@
+## 1段階目のtrajin処理。
+trajin 001/mdcrd 1 1 1
+reference ../../top/leap.rst7
+unwrap :1-382
+center :1-382@CA mass origin
+rms first out rmsd.dat @CA
+strip :SOD,WAT,TIP3,Cl-,Na+
+trajout AbVSinit.pdb pdb nobox
+go
+
+clear trajin
+
+## 2段階目のtrajin処理。
+trajin 001/mdcrd 1 last 50
+trajin 002/mdcrd 1 last 50
+trajin 003/mdcrd 1 last 50
+
+unwrap :1-382
+center :1-382@CA mass origin
+rms first out rmsd.dat @CA
+strip :SOD,WAT,TIP3,Cl-,Na+
+
+trajout AbVStraj.trr
+go
